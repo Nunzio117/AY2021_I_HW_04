@@ -11,7 +11,9 @@
 */
 #include "InterruptRoutines.h"
 #include "Functions.h"
-static char message[20] = {'\0'};
+
+static char message1[20] = {'\0'};
+static char message2[20] = {'\0'};
 
 int main(void)
 {
@@ -32,28 +34,38 @@ int main(void)
     PacketReadyFlag= 0;
 
     channel=1;// selezione il canale del potenziometro per avere valore di inzio per il pwm
-   
-    AMux_FastSelect(channel);
+    stop=0;
+    
     // Start the ADC conversion (messo dentroal F_Sampling, vedi se funziona)
     // ADC_DelSig_StartConvert();
-    F_Sampling();
     
-   
     for(;;)
     {
-         if (PacketReadyFlag == 1){
-        sprintf(message, "Received: %ld\r\n",value_digit );
-        UART_PutString(message);
+        if(rec){
+            rec=0;
+            AMux_FastSelect(channel);
+            F_Sampling();
+            sprintf(message1, "\nP:%d",pot_value);
+            UART_PutString(message1);
+            AMux_FastSelect(channel);
+            F_Sampling();    
+            sprintf(message2, "Va: %d\r\n",value_digit );
+            UART_PutString(message2);
         }
-        if (PacketReadyFlag == 2){
-        sprintf(message, "Received: %ld\r\n",pot_value );
-        UART_PutString(message);
+//        if (PacketReadyFlag == 1 && !stop){
+//           UART_PutString("1");
+//        }
+//        if (PacketReadyFlag == 2 && !stop){
+//            //sprintf(message, "\n%d",PacketReadyFlag);
+//            UART_PutString("2");
+//            PacketReadyFlag= 0;
+//            //sprintf(message, "Va: %d\r\n",value_digit );
+//            //UART_PutString("\nP");
+//            // Send out the data
+//            //UART_PutArray(DataBuffer1, TRANSMIT_BUFFER_SIZE);
+//            //UART_PutArray(DataBuffer2, TRANSMIT_BUFFER_SIZE);
+//        }
         
-        // Send out the data
-        //UART_PutArray(DataBuffer1, TRANSMIT_BUFFER_SIZE);
-        //UART_PutArray(DataBuffer2, TRANSMIT_BUFFER_SIZE);
-        PacketReadyFlag= 0;
-        }
     }
 }
 

@@ -23,10 +23,13 @@
     CY_ISR_PROTO (Custom_ISR_ADC);
     CY_ISR_PROTO (Custom_ISR_RX);
     
-    
     uint8_t DataBuffer1[TRANSMIT_BUFFER_SIZE];
     uint8_t DataBuffer2[TRANSMIT_BUFFER_SIZE];
     
-    volatile uint8 PacketReadyFlag;
+    uint8 ch_receveid;
+    
+    volatile uint8 rec; //sulle flag e
+    
+    void F_Read();
 #endif
 /* [] END OF FILE */
