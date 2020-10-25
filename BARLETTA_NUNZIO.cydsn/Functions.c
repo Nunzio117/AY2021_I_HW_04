@@ -22,13 +22,12 @@ void F_Sampling(){
     //ADC_DelSig_StopConvert();
     
     if (value_digit < 0) value_digit= 0;
-    if (value_digit > 1023) value_digit= 1023;
+    if (value_digit > 255) value_digit= 255;
     
     if (!channel){
-        if (value_digit <=300){
+        if (value_digit <=140){ //300
             PWM_LED_WriteCounter(0);
             PWM_LED_WriteCompare(pot_value); 
-            //channel=1; se vuoi che dia il valore solo se led acceso, togli commento e cancelli quello sotto
         }else{
             PWM_LED_WriteCompare(0); 
         }
@@ -37,7 +36,7 @@ void F_Sampling(){
         pot_value= value_digit;
         channel=0;
     }
-    PacketReadyFlag+=1;
+
 }
 
 void F_Read(){
@@ -46,19 +45,24 @@ void F_Read(){
         case 'b':
             Pin_Blue_Write(1);
             Timer_Start();
-            stop=0;
             break;
        case 'S':
        case 's':
             Pin_Blue_Write(0);
             Timer_Stop();
-            stop=1;
-            PacketReadyFlag=0;
             channel=1;
             //PWM_LED_WriteCompare(0); vedi se metterlo o meno
             break;
        default:
             break;
     }
+}
+
+void F_SendBuffer(){
+    DataBuffer[1] = pot_value ;
+    DataBuffer[2] = value_digit;
+    //DataBuffer[3] = value_digit >> 8;
+    //DataBuffer[4] = value_digit & 0xFF;
+    UART_PutArray(DataBuffer, TRANSMIT_BUFFER_SIZE);
 }
 /* [] END OF FILE */

@@ -14,14 +14,19 @@
    
     #include "project.h"
     
+    #define BYTE_TO_SEND 2
+    #define TRANSMIT_BUFFER_SIZE 1+BYTE_TO_SEND+1
+    
+    uint8_t DataBuffer[TRANSMIT_BUFFER_SIZE];
+    
     int16 value_digit;
     //int32 value_mv;
     int16 pot_value;
-   
-    uint8 PacketReadyFlag;
-    volatile uint8 stop;
+  
     volatile uint8 channel;
+    
     void F_Sampling();
+    void F_SendBuffer();
     
 #endif
 

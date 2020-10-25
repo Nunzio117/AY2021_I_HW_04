@@ -16,15 +16,9 @@
    
     #include "cytypes.h"
     #include "stdio.h"
-    
-    #define BYTE_TO_SEND 2
-    #define TRANSMIT_BUFFER_SIZE 1+BYTE_TO_SEND+1
 
     CY_ISR_PROTO (Custom_ISR_ADC);
     CY_ISR_PROTO (Custom_ISR_RX);
-    
-    uint8_t DataBuffer1[TRANSMIT_BUFFER_SIZE];
-    uint8_t DataBuffer2[TRANSMIT_BUFFER_SIZE];
     
     uint8 ch_receveid;
     
