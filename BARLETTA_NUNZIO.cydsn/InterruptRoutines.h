@@ -13,17 +13,17 @@
     #define __INTERRUPT_ROUTINES_H
     
     // Include required header files
-   
     #include "cytypes.h"
     #include "stdio.h"
+    #include "project.h"
 
     CY_ISR_PROTO (Custom_ISR_ADC);
     CY_ISR_PROTO (Custom_ISR_RX);
     
-    uint8 ch_receveid;
+    volatile uint8 receveid; //variabile di flag per chimata interrupt del Timer
+    volatile uint8 channel; //variabile per indicare canale di campionamento
+    /*NOTA: potenziometro --> channel 1 del Mux;
+            fotoresistenza --> channel 0 del.*/
     
-    volatile uint8 rec; //sulle flag e
-    
-    void F_Read();
 #endif
 /* [] END OF FILE */
