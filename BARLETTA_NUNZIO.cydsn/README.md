@@ -10,7 +10,7 @@ Vi sono presenti i seguenti componenti:
 	- Resistenza da 330 Ohm per LED esteno al PSoC;
 	- Led_Pin: pin relativo al canale del LED esterno al PSoC;
 	- Red_Led: rappresentazione del LED esterno;
-	- Pin_Blue: pin relativo al LED interno al PSoC
+	- Pin_Blue: pin relativo al LED interno al PSoC;
 	- UART: componente interno al PSoC per comunicazione con terminale;
 	- PWM_LED: PWM per gestire l'intensità del LED, settato con risoluzione ad 8 bit e periodo di 1ms circa.
 - Pagina 2:
@@ -44,6 +44,8 @@ L'elaborato è stato programmato centrandosi su campionamenti di segnali ad 8 bi
 nel caso lo si voglia, il numero di fotoreistenze da campionare. Il codice infatti è già predisposto per tale upgrade, basta
 lasciare il potenziometro sul channel 0 del multiplexer. Qual'ora si volesse cambiare la risoluzione di campionamento (ad
 esempio da 8 a 10 bit), bisognerà fare degli accorgimenti sull'array "DataBuffer".
+Infine, all'invio dei caratteri "b" o "B" il dispositivo funzionerà correttamente, mentre all'invio "s" o "S" il sistema
+si stopperà, spegnedo il led nel caso fosse acceso.
 
 
 ## Bridge control panel confing
