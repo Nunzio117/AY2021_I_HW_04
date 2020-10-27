@@ -1,0 +1,5 @@
+; A0 --> header del buffer di trasmissione
+; @pot --> byte relativo ai valori del potenziometro campionato ad 8 bit
+; @photo --> byte relativo ai valori della fotoresistenza campionataa d 8 bit
+; C0 --> tail del buffer di trasmissione
+rx8 [h=A0] @pot @photo [t=C0]

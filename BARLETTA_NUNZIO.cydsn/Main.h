@@ -9,24 +9,28 @@
  *
  * ========================================
 */
-#ifndef __FUNCTIONS_H
-    #define __FUNCTIONS_H
+#ifndef __MAIN_H
+    #define __MAIN_H
    
     #include "InterruptRoutines.h" /*include relativo alle interrupt e variabili annesse. Include
                                      anche "cytypes.h", "stdio.h" e "project.h"*/
     
-    #define BYTE_TO_SEND 2 // settato per campionamento ad 8 bit 
+    #define BYTE_TO_SEND 2 //settato per campionamento ad 8 bit di 2 segnali
     #define TRANSMIT_BUFFER_SIZE 1+BYTE_TO_SEND+1
     
-    #define THRESHOLD 100 /*Threshold per decisione su accensione o meno del LED. Settato per
+    #define THRESHOLD 130 /*Threshold per decisione su accensione o meno del LED. Settato per
                             campionamento ad 8 bit*/
-
+    #define N_CHANNEL 2 //numero dei canali dei segnali usati per l'applicazione 
+    
     int16 value_digit; //valore di lettura del campionamento
-    int16 pot_value; //valore del potenziometro
+    int16 mean_value; //valore medio assunto dai canali che campionano segnali di fotoresistenze
+    uint8 channel; //variabile per indicare canale di campionamento
+    /*NOTA: potenziometro --> channel 0 del Mux;
+            fotoresistenza --> channel 1 del Mux.*/
     
     uint8_t DataBuffer[TRANSMIT_BUFFER_SIZE]; //array di trasmissione dati al terminale
     
-    void F_Sampling(); //funzione usata ed esplicitata in "main.c"
+    void F_Sampling(); //funzione adibita al campionamento, usata ed esplicitata in "main.c"
     
 #endif
 

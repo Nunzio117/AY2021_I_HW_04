@@ -21,9 +21,6 @@
     CY_ISR_PROTO (Custom_ISR_RX);
     
     volatile uint8 receveid; //variabile di flag per chimata interrupt del Timer
-    volatile uint8 channel; //variabile per indicare canale di campionamento
-    /*NOTA: potenziometro --> channel 1 del Mux;
-            fotoresistenza --> channel 0 del.*/
     
 #endif
 /* [] END OF FILE */

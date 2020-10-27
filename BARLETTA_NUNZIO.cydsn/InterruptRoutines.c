@@ -34,7 +34,6 @@ CY_ISR(Custom_ISR_RX){
             Pin_Blue_Write(0);
             PWM_LED_Stop(); //stop del PWM
             Timer_Stop(); //stop del Timer
-            channel=1; //variabile definita in "InterruptRoutines.h"
             break;
        default:
             break;

@@ -9,6 +9,7 @@
  *
  * ========================================
 */
+
 //include header
 #include "Main.h" /*include relativo alle variabili ed alle funzioni usate qui nel "main.c" e
                     ingloba anche "interruptRoutines.h"*/
@@ -26,27 +27,24 @@ int main(void)
     isr_RX_StartEx(Custom_ISR_RX);
     
     //inserimento valori di default per array di invio dati. Array definito in "Main.h"
-    DataBuffer[0] = 0xA0;
-    DataBuffer[TRANSMIT_BUFFER_SIZE-1] = 0xC0;
+    DataBuffer[0] = 0xA0; //header del array
+    DataBuffer[TRANSMIT_BUFFER_SIZE-1] = 0xC0; //tail del array
     
-    //inizializzazione variabili definite in "interruptRoutines.h"
-    receveid=0;
-    channel=1; //inizializzato con valore 1 in modo da partire col campionamento del Potenziometro
-    /*NOTA: potenziometro --> channel 1 del Mux;
-            fotoresistenza --> channel 0 del.*/
+    receveid=0;//inizializzazione di receveid, definita in "interruptRoutines.h"
     
     for(;;)
     {
         if(receveid){
             receveid=0;
+            mean_value=0;
             
-            F_Sampling();//funzione definita qui di seguito ed inizializzata in "Main.h"
-            
-            F_Sampling();  
-            /*NOTA: tale funzione è chiamata 2 volte di fila siccome in una sola chiamata 
-            interrupt relativa alla componente timer, devo campionare 2 segnali (potenziometro 
-            con channel=1 e fotoresistenza con channel=0). Lo scambio dei canali avviene 
-            all'interno della funzione stessa come mostrato di seguito*/
+            for(channel=0; channel<N_CHANNEL; channel++){//channel è definita in "Main.h"
+                F_Sampling();//funzione definita qui di seguito ed inizializzata in "Main.h"
+            }
+            /*NOTA: in tale applicazioe, tale funzione è chiamata 2 volte di fila (N_CHANNEL
+            definita in "Main.h" ha come valore 2)siccome in una sola chiamata interrupt, relativa
+            alla componente timer, devo campionare 2 segnali (potenziometro con channel=0 e 
+            fotoresistenza con channel=1). Lo scambio dei canali avviene per mezzo del ciclo for*/
             
             //comunicazione a terminale dell'array "DataBuffer" completato in "F_Sampling"
             UART_PutArray(DataBuffer, TRANSMIT_BUFFER_SIZE);
@@ -70,20 +68,27 @@ void F_Sampling(){
     if (value_digit < 0) value_digit= 0;
     if (value_digit > 255) value_digit= 255;
     
-    /*controllo del canale per poter preservare il valore del potenziometro in pot_value se siamo
-    in channel=1, oppure accendere o spegnere il led a seconda di quanto riportato da value_digit
-    se siamo in channel=0; pot_value è inizializzata in "Main.h"*/
-    if (!channel){
-        PWM_LED_WriteCounter(0);
-        if (value_digit <=THRESHOLD){ //THRESHOLD è definita in "Main.h"
-            PWM_LED_WriteCompare(pot_value); //funzione per controllo del pwm tramite pot_value
+    if(channel>0){ 
+        mean_value+=value_digit;/*variabile usata per possibili implementazioni future in cui ci 
+                                sono più fotoresistenze da campionare; definita in "Main.h"*/
+    }
+    
+    /*controllo del canale per poter accendere o spegnere il led a seconda di quanto riportato 
+    da mean_value , solo se siamo arrivati all'ultimo channel; è importante settare il 
+    potenziometro al channel==0 in modo da poter permettere tale applicazione*/
+    if (channel==N_CHANNEL-1){
+        
+        mean_value=mean_value/(N_CHANNEL-1);/*non avrò un valore con la virgola ma una approssimazione
+                                             siccome mean_value è intero e le variabili usate nella
+                                             operazione non sono float*/
+        
+        if (mean_value<=THRESHOLD){ //THRESHOLD è definita in "Main.h"
+            PWM_LED_WriteCompare(DataBuffer[1]); /*funzione per controllo del pwm tramite corretta
+                                                   cella del DataBuffer in cui vi è il dato del
+                                                   potenziometro*/
         }else{
             PWM_LED_WriteCompare(0);
-        }
-        channel=1; 
-    }else{
-        pot_value= value_digit;
-        channel=0;
+        }  
     }
     
     DataBuffer[channel+1] = value_digit; //completamento del array "DataBuffer"
@@ -92,9 +97,6 @@ void F_Sampling(){
       quindi per questo motivo mandiamo 1 byte per il potenziometro ed 1 per la fotoresistenza.
       potenziometro --> DataBuffer[1]
       fotoresistenza --> Databuffer[2]*/
-    
-    //DataBuffer[3] = value_digit >> 8;
-    //DataBuffer[4] = value_digit & 0xFF;
 }
 
 
