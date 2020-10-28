@@ -22,8 +22,9 @@
                             campionamento ad 8 bit*/
     #define N_CHANNEL 2 //numero dei canali dei segnali usati per l'applicazione 
     
-    int16 value_digit; //valore di lettura del campionamento
-    int16 mean_value; //valore medio assunto dai canali che campionano segnali di fotoresistenze
+    int16 value_digit; //variabile per valore di lettura del campionamento
+    int16 value_mv; //variabile per valore campionato convertito in mv
+    int16 mean_value; //variabile per valore medio assunto dai canali che campionano segnali di fotoresistenze
     uint8 channel; //variabile per indicare canale di campionamento
     /*NOTA: potenziometro --> channel 0 del Mux;
             fotoresistenza --> channel 1 del Mux.*/

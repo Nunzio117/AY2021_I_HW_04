@@ -36,7 +36,8 @@ int main(void)
     {
         if(receveid){
             receveid=0;
-            mean_value=0;
+            mean_value=0;/*variabile usata per possibili implementazioni future in cui ci sono
+                         più fotoresistenze da campionare; definita in "Main.h"*/
             
             for(channel=0; channel<N_CHANNEL; channel++){//channel è definita in "Main.h"
                 F_Sampling();//funzione definita qui di seguito ed inizializzata in "Main.h"
@@ -69,8 +70,7 @@ void F_Sampling(){
     if (value_digit > 255) value_digit= 255;
     
     if(channel>0){ 
-        mean_value+=value_digit;/*variabile usata per possibili implementazioni future in cui ci 
-                                sono più fotoresistenze da campionare; definita in "Main.h"*/
+        mean_value+=value_digit;
     }
     
     /*controllo del canale per poter accendere o spegnere il led a seconda di quanto riportato 
@@ -91,7 +91,9 @@ void F_Sampling(){
         }  
     }
     
-    DataBuffer[channel+1] = value_digit; //completamento del array "DataBuffer"
+    value_mv= ADC_DelSig_CountsTo_mVolts(value_digit); //passaggio da digit a mv
+    
+    DataBuffer[channel+1] = value_mv; //completamento del array "DataBuffer"
     /*NOTA: siccome stiamo campionando ad 8 bit, sia il valore della fotoresistenza che del 
       potenziometro a cui siamo interessati, è un valore ricostruibile con un singolo byre
       quindi per questo motivo mandiamo 1 byte per il potenziometro ed 1 per la fotoresistenza.

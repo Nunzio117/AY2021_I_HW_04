@@ -14,7 +14,7 @@ Vi sono presenti i seguenti componenti:
 	- UART: componente interno al PSoC per comunicazione con terminale;
 	- PWM_LED: PWM per gestire l'intensità del LED, settato con risoluzione ad 8 bit e periodo di 1ms circa.
 - Pagina 2:
-	- Timer: timer per avere una isr che permetta il campionamento dei 2 canali ogni 100ms;
+	- Timer: timer per avere una isr che permetta lettura del dato campionanto dei 2 canali ogni 100ms;
 	- R_Pin: pin relativo al potenziometro;
 	- Pot: rappresentazione del potenziometro;
 	- PR_Pin: pin relativo alla fotoresistenza;
