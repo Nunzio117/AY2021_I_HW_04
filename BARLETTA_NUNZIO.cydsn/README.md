@@ -21,7 +21,7 @@ Vi sono presenti i seguenti componenti:
 	- PR: rappresentazione della fotoresistenza;
 	- Resistenza da 10 k_Ohm per la fotoresistenza;
 	- AMux a 2 canali (potenziometro --> channel 0 ; fotoresistenza --> channel 1);
-	- ADC_DelSig: componente interno al PSoC per campionamento con diverse modalità, impostato su "Multi Sample" ed su
+	- ADC_DelSig: componente interno al PSoC per campionamento con diverse modalità, impostato su "Multi Sample" e su
 			   campionamento ad 8 bit.
 
 
@@ -43,7 +43,8 @@ Nei file di "Header" e di "Source" vi sono esplicitati già i dettagli reativi a
 L'elaborato è stato programmato centrandosi su campionamenti di segnali ad 8 bit. Inoltre vi è la possibilità di aumentare,
 nel caso lo si voglia, il numero di fotoreistenze da campionare. Il codice infatti è già predisposto per tale upgrade, basta
 lasciare il potenziometro sul channel 0 del multiplexer. Qual'ora si volesse cambiare la risoluzione di campionamento (ad
-esempio da 8 a 10 bit), bisognerà fare degli accorgimenti sull'array "DataBuffer".
+esempio da 8 a 10 bit), bisognerà fare degli accorgimenti sull'array "DataBuffer". I valori mandati a terminale sono valori
+in digit e quindi avendo un campionamento ad 8 bit, saranno valori da 0 a 255.
 Infine, all'invio dei caratteri "b" o "B" il dispositivo funzionerà correttamente, mentre all'invio "s" o "S" il sistema
 si stopperà, spegnedo il led nel caso fosse acceso.
 

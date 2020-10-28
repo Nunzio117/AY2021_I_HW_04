@@ -91,9 +91,7 @@ void F_Sampling(){
         }  
     }
     
-    value_mv= ADC_DelSig_CountsTo_mVolts(value_digit); //passaggio da digit a mv
-    
-    DataBuffer[channel+1] = value_mv; //completamento del array "DataBuffer"
+    DataBuffer[channel+1] = value_digit; //completamento del array "DataBuffer"
     /*NOTA: siccome stiamo campionando ad 8 bit, sia il valore della fotoresistenza che del 
       potenziometro a cui siamo interessati, è un valore ricostruibile con un singolo byre
       quindi per questo motivo mandiamo 1 byte per il potenziometro ed 1 per la fotoresistenza.
