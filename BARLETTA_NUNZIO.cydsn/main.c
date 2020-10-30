@@ -22,7 +22,7 @@ int main(void)
     ADC_DelSig_Start(); //start del ADC usato, ma non inizio campionamento
     UART_Start(); //start del UART
     
-    // start delle isr
+    //start delle isr
     isr_ADC_StartEx(Custom_ISR_ADC);
     isr_RX_StartEx(Custom_ISR_RX);
     
@@ -30,7 +30,7 @@ int main(void)
     DataBuffer[0] = 0xA0; //header del array
     DataBuffer[TRANSMIT_BUFFER_SIZE-1] = 0xC0; //tail del array
     
-    receveid=0;//inizializzazione di receveid, definita in "interruptRoutines.h"
+    receveid=0; //inizializzazione di receveid, definita in "interruptRoutines.h"
     
     for(;;)
     {
@@ -42,10 +42,6 @@ int main(void)
             for(channel=0; channel<N_CHANNEL; channel++){//channel è definita in "Main.h"
                 F_Sampling();//funzione definita qui di seguito ed inizializzata in "Main.h"
             }
-            /*NOTA: in tale applicazioe, tale funzione è chiamata 2 volte di fila (N_CHANNEL
-            definita in "Main.h" ha come valore 2)siccome in una sola chiamata interrupt, relativa
-            alla componente timer, devo campionare 2 segnali (potenziometro con channel=0 e 
-            fotoresistenza con channel=1). Lo scambio dei canali avviene per mezzo del ciclo for*/
             
             //comunicazione a terminale dell'array "DataBuffer" completato in "F_Sampling"
             UART_PutArray(DataBuffer, TRANSMIT_BUFFER_SIZE);
@@ -69,13 +65,12 @@ void F_Sampling(){
     if (value_digit < 0) value_digit= 0;
     if (value_digit > 255) value_digit= 255;
     
-    if(channel>0){ 
+    if(channel>0){ //per tale calcolo escludo il potenziometro posto a channel 0
         mean_value+=value_digit;
     }
     
     /*controllo del canale per poter accendere o spegnere il led a seconda di quanto riportato 
-    da mean_value , solo se siamo arrivati all'ultimo channel; è importante settare il 
-    potenziometro al channel==0 in modo da poter permettere tale applicazione*/
+    da mean_value , solo se siamo arrivati all'ultimo channel*/
     if (channel==N_CHANNEL-1){
         
         mean_value=mean_value/(N_CHANNEL-1);/*non avrò un valore con la virgola ma una approssimazione

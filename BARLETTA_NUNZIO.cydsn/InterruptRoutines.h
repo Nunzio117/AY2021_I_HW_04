@@ -12,7 +12,7 @@
 #ifndef __INTERRUPT_ROUTINES_H
     #define __INTERRUPT_ROUTINES_H
     
-    // Include required header files
+    //Include required header files
     #include "cytypes.h"
     #include "stdio.h"
     #include "project.h"

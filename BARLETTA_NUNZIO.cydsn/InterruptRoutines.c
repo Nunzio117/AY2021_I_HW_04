@@ -14,7 +14,7 @@
 
 CY_ISR (Custom_ISR_ADC)
 {
-    // Read Timer status register to bring interrupt line low
+    //Read Timer status register to bring interrupt line low
     Timer_ReadStatusRegister();
     
     receveid=1; 
@@ -22,7 +22,7 @@ CY_ISR (Custom_ISR_ADC)
 
 CY_ISR(Custom_ISR_RX){
 
-    switch ( UART_GetChar()){  //"UART_GetChar()" Non blocking call to get the latest data recieved
+    switch (UART_GetChar()){ //"UART_GetChar()" Non blocking call to get the latest data recieved
         case 'B':
         case 'b':
             Pin_Blue_Write(1);

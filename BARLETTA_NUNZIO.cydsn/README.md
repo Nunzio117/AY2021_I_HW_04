@@ -1,4 +1,5 @@
 # ASSIGNMENT 4
+
 ## Richieste
 Le richieste per tale assignment sono esplicitate nel README generale.
 
@@ -40,13 +41,15 @@ Nei file di "Header" e di "Source" vi sono esplicitati già i dettagli reativi a
 
 
 ## Nota sulla programmazione dell'elaborato
-L'elaborato è stato programmato centrandosi su campionamenti di segnali ad 8 bit. Inoltre vi è la possibilità di aumentare,
-nel caso lo si voglia, il numero di fotoreistenze da campionare. Il codice infatti è già predisposto per tale upgrade, basta
-lasciare il potenziometro sul channel 0 del multiplexer. Qual'ora si volesse cambiare la risoluzione di campionamento (ad
-esempio da 8 a 10 bit), bisognerà fare degli accorgimenti sull'array "DataBuffer". I valori mandati a terminale sono valori
-in digit e quindi avendo un campionamento ad 8 bit, saranno valori da 0 a 255.
-Infine, all'invio dei caratteri "b" o "B" il dispositivo funzionerà correttamente, mentre all'invio "s" o "S" il sistema
-si stopperà, spegnedo il led nel caso fosse acceso.
+L'elaborato è stato programmato centrandosi su campionamenti ad 8 bit dei segnali richiesti. Inoltre vi è la possibilità di 
+aumentare, nel caso lo si voglia, il numero di fotoreistenze da campionare. Il codice infatti è già predisposto per tale 
+upgrade, basta lasciare il potenziometro sul channel 0 del multiplexer, cambiare il valore alla define "N_CHANNEL" e della
+define "BYTE_TO_SEND", entrambe definite in "Main.h". Qual'ora si volesse cambiare la risoluzione di  campionamento (ad 
+esempio da 8 a 10 bit), bisognerà fare degli accorgimenti sull'array "DataBuffer". I valori mandati a terminale sono valori 
+in digit e quindi avendo un campionamento ad 8 bit, saranno valori da 0 a 255. Infine, all'invio dei caratteri "b" o "B" il 
+dispositivo funzionerà come da richiesta, mentre all'invio "s" o "S" il sistema si stopperà, spegnedo il led nel caso fosse 
+acceso. Per motivi diagnostici, sia il segnale del potenziometro che della fotoresistenza sono mandati costantemente a 
+terminale ad eccezione del caso in cui il sistema si stoppi per l'invio dei caratteri detti prima.
 
 
 ## Bridge control panel confing
